@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="ParkingProject.jnlp">
+  <information>
+    <title>Parking System</title>
+    <vendor>Jack And Sunblessed</vendor>
+    <description>ParkingProject</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="ParkingProject.jar" size="32552" download="eager" />
+    <jar href="google-maps-services-0.2.11.jar" size="210331" download="eager" />
+    <jar href="jfoenix-8.0.7.jar" size="2631271" download="eager" />
+    <jar href="json-20180813.jar" size="64597" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="600" height="400" main-class="mainStruct.Main"  name="ParkingProject" />
+  <update check="background"/>
+</jnlp>

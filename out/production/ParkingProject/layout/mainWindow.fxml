@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import javafx.scene.control.Tab?>
+
+<JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="40.0" tabMinHeight="40.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+   <tabs>
+      <Tab text="Карта">
+        <content>
+            <fx:include source="mapPage.fxml" />
+        </content>
+      </Tab>
+      <Tab text="Список">
+        <content>
+            <fx:include source="listPage.fxml" />
+        </content>
+      </Tab>
+      <Tab text="Журнал">
+        <content>
+            <fx:include source="journalPage.fxml" />
+        </content>
+      </Tab>
+   </tabs>
+</JFXTabPane>

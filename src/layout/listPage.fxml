@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainStruct.ListController">
+
+        <GridPane gridLinesVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.0" minWidth="0.0" prefWidth="63.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="0.0" prefWidth="89.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="408.0" minWidth="10.0" prefWidth="130.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="472.0" minWidth="0.0" prefWidth="117.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="472.0" minWidth="10.0" prefWidth="92.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="472.0" minWidth="10.0" prefWidth="88.0" />
+                <ColumnConstraints maxWidth="398.0" minWidth="82.0" prefWidth="123.0" />
+            </columnConstraints>
+
+            <rowConstraints>
+                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+
+            <JFXTextField alignment="CENTER" cache="true" editable="false" focusColor="#405aa800" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" text="Место" unFocusColor="#4d4d4d00" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <cursor>
+                    <Cursor fx:constant="DEFAULT" />
+                </cursor>
+            </JFXTextField>
+
+            <JFXTextField alignment="CENTER" editable="false" focusColor="#405aa800" focusTraversable="false" prefHeight="39.0" prefWidth="55.0" text="Автомобиль" unFocusColor="#4d4d4d00" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <cursor>
+                    <Cursor fx:constant="DEFAULT" />
+                </cursor>
+            </JFXTextField>
+
+            <JFXTextField alignment="CENTER" editable="false" focusColor="#405aa800" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" text="Занято до" unFocusColor="#4d4d4d00" GridPane.columnIndex="4" GridPane.rowIndex="0">
+                <cursor>
+                    <Cursor fx:constant="DEFAULT" />
+                </cursor>
+            </JFXTextField>
+
+            <JFXTextField alignment="CENTER" editable="false" focusColor="#405aa800" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" text="Номер телефона" unFocusColor="#4d4d4d00" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                <cursor>
+                    <Cursor fx:constant="DEFAULT" />
+                </cursor>
+            </JFXTextField>
+
+            <JFXTextField alignment="CENTER" editable="false" focusColor="#405aa800" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" text="ФИО владельца" unFocusColor="#4d4d4d00" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                <cursor>
+                    <Cursor fx:constant="DEFAULT" />
+                </cursor>
+            </JFXTextField>
+
+            <JFXTextField alignment="CENTER" editable="false" focusColor="#405aa800" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" text="Доп. часы" unFocusColor="#4d4d4d00" GridPane.columnIndex="5" GridPane.rowIndex="0">
+                <cursor>
+                    <Cursor fx:constant="DEFAULT" />
+                </cursor>
+            </JFXTextField>
+
+            <JFXTextField alignment="CENTER" editable="false" focusColor="#405aa800" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" text="Сумма к оплате" unFocusColor="#4d4d4d00" GridPane.columnIndex="6" GridPane.rowIndex="0">
+                <cursor>
+                    <Cursor fx:constant="DEFAULT" />
+                </cursor>
+            </JFXTextField>
+
+        </GridPane>
+</AnchorPane>
