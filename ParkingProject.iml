@@ -7,8 +7,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="json-20180813" level="project" />
+    <orderEntry type="library" exported="" name="google-maps-services-0.2.11" level="project" />
     <orderEntry type="library" name="jfoenix-8.0.7" level="project" />
-    <orderEntry type="library" name="json-20180813" level="project" />
-    <orderEntry type="library" name="google-maps-services-0.2.11" level="project" />
   </component>
 </module>

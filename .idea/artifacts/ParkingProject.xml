@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="javafx" name="ParkingProject">
+  <artifact type="javafx" build-on-make="true" name="ParkingProject">
     <output-path>$PROJECT_DIR$/out/artifacts/ParkingProject</output-path>
     <properties id="javafx-properties">
       <options>
@@ -15,7 +15,6 @@
     <root id="root">
       <element id="archive" name="ParkingProject.jar">
         <element id="module-output" name="ParkingProject" />
-        <element id="library" level="project" name="jfoenix-8.0.7" />
         <element id="library" level="project" name="json-20180813" />
         <element id="library" level="project" name="google-maps-services-0.2.11" />
       </element>
