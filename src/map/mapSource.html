@@ -1,39 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <style type="text/css">
-        html { height: 100% }
-        body { height: 100%; margin: 0; padding: 0 }
-        #map_canvas { height: 100% }
-    </style>
-    <script type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCGiaQcDDR4C8gsXvnL-FVGAQVse40ryA">
+    <title>Быстрый старт. Размещение интерактивной карты на странице</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=4d2416ba-3605-40af-9575-46cb20eea06b&lang=ru_RU"
+            type="text/javascript">
     </script>
-    <script type="text/javascript">
-        var map;
-        var marker;
-
-        function initialize() {
-            var defLatLng = new google.maps.LatLng(55.794429, 49.096856);
-            var mapOptions = {
-                center: defLatLng,
-                zoom: 20,
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
-                disableDefaultUI: true,
-                panControl: false
-            };
-            map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-
-            marker = new google.maps.Marker({
-                position: defLatLng,
-                map: map,
-                icon: "img/Pin.png"
-            });
-        }
-    </script>
+    <script src="MapScript.js"></script>
 </head>
-<body onload="initialize()">
-<div id="map_canvas" style="width:100%; height:100%"></div>
+
+<body>
+<div id="map" style="width: 600px; height: 400px"></div>
 </body>
+
 </html>
