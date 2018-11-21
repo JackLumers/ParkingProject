@@ -7,33 +7,38 @@ import javafx.beans.property.StringProperty;
 
 public class Client {
     //Declare Employees Table Columns
-    private IntegerProperty employee_id;
+    private IntegerProperty id;
     private StringProperty first_name;
     private StringProperty last_name;
-    private StringProperty email;
     private StringProperty phone_number;
+    private IntegerProperty hours;
+    private IntegerProperty price;
+    private IntegerProperty sum;
+
 
 
     //Constructor
     public Client() {
-        this.employee_id = new SimpleIntegerProperty();
+        this.id = new SimpleIntegerProperty();
         this.first_name = new SimpleStringProperty();
         this.last_name = new SimpleStringProperty();
-        this.email = new SimpleStringProperty();
         this.phone_number = new SimpleStringProperty();
+        this.hours = new SimpleIntegerProperty();
+        this.price = new SimpleIntegerProperty();
+        this.sum = new SimpleIntegerProperty();
     }
 
     //employee_id
     public int getEmployeeId() {
-        return employee_id.get();
+        return id.get();
     }
 
     public void setEmployeeId(int employeeId){
-        this.employee_id.set(employeeId);
+        this.id.set(employeeId);
     }
 
     public IntegerProperty employeeIdProperty(){
-        return employee_id;
+        return id;
     }
 
     //first_name
@@ -62,17 +67,30 @@ public class Client {
         return last_name;
     }
 
-    //email
-    public String getEmail () {
-        return email.get();
+    //hours
+    public int getHoursId() {
+        return hours.get();
     }
 
-    public void setEmail (String email){
-        this.email.set(email);
+    public void setHoursId(int employeeId){
+        this.hours.set(employeeId);
     }
 
-    public StringProperty emailProperty() {
-        return email;
+    public IntegerProperty HoursIdProperty(){
+        return hours;
+    }
+
+    //price
+    public int getPriceId() {
+        return price.get();
+    }
+
+    public void setPriceId(int employeeId){
+        this.price.set(employeeId);
+    }
+
+    public IntegerProperty PriceIdProperty(){
+        return price;
     }
 
     //phone_number
@@ -86,6 +104,16 @@ public class Client {
 
     public StringProperty phoneNumberProperty() {
         return phone_number;
+    }
+    //phone_sum
+    public int getSum () { return sum.get(); }
+
+    public void setSum (int employeeId){
+        this.price.set(employeeId);
+    }
+
+    public IntegerProperty SumProperty() {
+        return sum;
     }
 
 }

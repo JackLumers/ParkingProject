@@ -18,25 +18,21 @@ public class DBUtil {
     //Connection String
     //String connStr = "jdbc:oracle:thin:Username/Password@IP:Port/SID";
     //Username=HR, Password=HR, IP=localhost, IP=1521, SID=xe
-    private static final String connStr = "jdbc:oracle:thin:HR/HR@localhost:1521/xe";
+    private static final String connStr = "jdbc:mysql://localhost:3306/parking?serverTimezone=Europe/Moscow&useSSL=false";
+    private static final String username = "root";
+    private static final String password = "123456";
+    static Driver driver;
 
 
     //Connect to DB
     public static void dbConnect() throws SQLException, ClassNotFoundException {
         //Setting Oracle JDBC Driver
-        try {
-            Class.forName(JDBC_DRIVER);
-        } catch (ClassNotFoundException e) {
-            System.out.println("Where is your Oracle JDBC Driver?");
-            e.printStackTrace();
-            throw e;
-        }
 
         System.out.println("Oracle JDBC Driver Registered!");
 
         //Establish the Oracle Connection using Connection String
         try {
-            conn = DriverManager.getConnection(connStr);
+            conn = DriverManager.getConnection(connStr, username, password);
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console" + e);
             e.printStackTrace();

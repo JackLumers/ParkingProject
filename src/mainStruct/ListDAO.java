@@ -7,14 +7,14 @@ import javafx.collections.ObservableList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ClientDAO {
+public class ListDAO {
 
     //*******************************
     //SELECT an Employee
     //*******************************
     public static Client searchEmployee(String empId) throws SQLException, ClassNotFoundException {
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM employees WHERE employee_id=" + empId;
+        String selectStmt = "SELECT * FROM employees WHERE id=" + empId;
 
         //Execute SELECT statement
         try {
@@ -22,10 +22,10 @@ public class ClientDAO {
             ResultSet rsEmp = DBUtil.dbExecuteQuery(selectStmt);
 
             //Send ResultSet to the getEmployeeFromResultSet method and get employee object
-            Client employee = getEmployeeFromResultSet(rsEmp);
+            Client client = getEmployeeFromResultSet(rsEmp);
 
             //Return employee object
-            return employee;
+            return client;
         } catch (SQLException e) {
             System.out.println("While searching an employee with " + empId + " id, an error occurred: " + e);
             //Return exception
@@ -38,11 +38,14 @@ public class ClientDAO {
         Client emp = null;
         if (rs.next()) {
             emp = new Client();
-            emp.setEmployeeId(rs.getInt("EMPLOYEE_ID"));
-            emp.setFirstName(rs.getString("FIRST_NAME"));
-            emp.setLastName(rs.getString("LAST_NAME"));
-            emp.setEmail(rs.getString("EMAIL"));
-            emp.setPhoneNumber(rs.getString("PHONE_NUMBER"));
+            emp.setEmployeeId(rs.getInt("id"));
+            emp.setFirstName(rs.getString("first_name"));
+            emp.setLastName(rs.getString("last_name"));
+            emp.setPhoneNumber(rs.getString("phone"));
+            emp.setHoursId(rs.getInt("hours"));
+            emp.setPriceId(rs.getInt("price"));
+            emp.setSum(rs.getInt("sum"));
+
 
         }
         return emp;
@@ -53,7 +56,29 @@ public class ClientDAO {
     //*******************************
     public static ObservableList<Client> searchEmployees() throws SQLException, ClassNotFoundException {
         //Declare a SELECT statement
-        String selectStmt = "SELECT * FROM employees";
+        String selectStmt = "SELECT * FROM parking";
+
+        //Execute SELECT statement
+        try {
+            //Get ResultSet from dbExecuteQuery method
+            ResultSet rsEmps = DBUtil.dbExecuteQuery(selectStmt);
+
+            //Send ResultSet to the getEmployeeList method and get employee object
+            ObservableList<Client> empList = getEmployeeList(rsEmps);
+
+            //Return employee object
+            return empList;
+        } catch (SQLException e) {
+            System.out.println("SQL select operation has been failed: " + e);
+            //Return exception
+            throw e;
+        }
+    }
+    //SELECT journal
+    //*******************************
+    public static ObservableList<Client> searchJournal() throws SQLException, ClassNotFoundException {
+        //Declare a SELECT statement
+        String selectStmt = "SELECT * FROM journal";
 
         //Execute SELECT statement
         try {
@@ -79,11 +104,14 @@ public class ClientDAO {
 
         while (rs.next()) {
             Client emp = new Client();
-            emp.setEmployeeId(rs.getInt("EMPLOYEE_ID"));
-            emp.setFirstName(rs.getString("FIRST_NAME"));
-            emp.setLastName(rs.getString("LAST_NAME"));
-            emp.setEmail(rs.getString("EMAIL"));
-            emp.setPhoneNumber(rs.getString("PHONE_NUMBER"));
+            emp.setEmployeeId(rs.getInt("id"));
+            emp.setFirstName(rs.getString("first_name"));
+            emp.setLastName(rs.getString("last_name"));
+            emp.setPhoneNumber(rs.getString("phone"));
+            emp.setHoursId(rs.getInt("hours"));
+            emp.setPriceId(rs.getInt("price"));
+            emp.setSum(rs.getInt("sum"));
+
             //Add employee to the ObservableList
             empList.add(emp);
         }
@@ -91,39 +119,17 @@ public class ClientDAO {
         return empList;
     }
 
-    //*************************************
-    //UPDATE an employee's email address
-    //*************************************
-    public static void updateEmpEmail(String empId, String empEmail) throws SQLException, ClassNotFoundException {
-        //Declare a UPDATE statement
-        String updateStmt =
-                "BEGIN\n" +
-                        "   UPDATE employees\n" +
-                        "      SET EMAIL = '" + empEmail + "'\n" +
-                        "    WHERE EMPLOYEE_ID = " + empId + ";\n" +
-                        "   COMMIT;\n" +
-                        "END;";
-
-        //Execute UPDATE operation
-        try {
-            DBUtil.dbExecuteUpdate(updateStmt);
-        } catch (SQLException e) {
-            System.out.print("Error occurred while UPDATE Operation: " + e);
-            throw e;
-        }
-    }
 
     //*************************************
-    //DELETE an employee
+    //DELETE an parking
     //*************************************
-    public static void deleteEmpWithId(String empId) throws SQLException, ClassNotFoundException {
+    public static void deleteEmpWithId(String Id) throws SQLException, ClassNotFoundException {
         //Declare a DELETE statement
         String updateStmt =
-                "BEGIN\n" +
-                        "   DELETE FROM employees\n" +
-                        "         WHERE employee_id =" + empId + ";\n" +
-                        "   COMMIT;\n" +
-                        "END;";
+
+                        "   DELETE FROM parking\n" +
+                        "         WHERE id ='" + Id + "';\n";
+
 
         //Execute UPDATE operation
         try {
@@ -133,23 +139,41 @@ public class ClientDAO {
             throw e;
         }
     }
+    public static void deleteAllEmp() throws SQLException, ClassNotFoundException {
+        //Declare a DELETE statement
+        String updateStmt =
 
+                "   DELETE FROM journal;\n";
+
+
+        //Execute UPDATE operation
+        try {
+            DBUtil.dbExecuteUpdate(updateStmt);
+        } catch (SQLException e) {
+            System.out.print("Error occurred while DELETE Operation: " + e);
+            throw e;
+        }
+    }
     //*************************************
     //INSERT an employee
     //*************************************
-    public static void insertEmp(String name, String lastname, String email) throws SQLException, ClassNotFoundException {
+    public static void insertEmp(int id, String name, String lastname, String phone, int hours, int price, int sum) throws SQLException, ClassNotFoundException {
         //Declare a DELETE statement
         String updateStmt =
-                "BEGIN\n" +
-                        "INSERT INTO employees\n" +
-                        "(EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, HIRE_DATE, JOB_ID)\n" +
+                        "REPLACE INTO parking\n" +
+                        "(id, first_name, last_name, phone, hours, sum , price )\n" +
                         "VALUES\n" +
-                        "(sequence_employee.nextval, '" + name + "', '" + lastname + "','" + email + "', SYSDATE, 'IT_PROG');\n" +
-                        "END;";
+                        "( '" + id + "','" + name + "', '" + lastname + "','" + phone + "','" + hours + "', '" + sum + "','" + price + "');\n";
+        String journalStmt =
+                "REPLACE INTO journal\n" +
+                        "(id, first_name, last_name, phone, hours, sum , price )\n" +
+                        "VALUES\n" +
+                        "( '" + id + "','" + name + "', '" + lastname + "','" + phone + "','" + hours + "', '" + sum + "','" + price + "');\n";
 
         //Execute DELETE operation
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
+            DBUtil.dbExecuteUpdate(journalStmt);
         } catch (SQLException e) {
             System.out.print("Error occurred while DELETE Operation: " + e);
             throw e;
