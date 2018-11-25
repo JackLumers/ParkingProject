@@ -11,12 +11,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/layout/mainWindow.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/layout/authorization.fxml"));
         primaryStage.setTitle("Parking System");
         primaryStage.setScene(new Scene(root));
         primaryStage.getIcons().add(new Image("/images/icon.png"));
-        primaryStage.setMinHeight(Constants.MIN_WINDOW_HEIGHT);
-        primaryStage.setMinWidth(Constants.MIN_WINDOW_WIDTH);
+        primaryStage.setMinHeight(Constants.AUTORIZATION_WINDOW_HEIGHT);
+        primaryStage.setMinWidth(Constants.AUTORIZATION_WINDOW_WIDTH);
         primaryStage.setResizable(false);
         primaryStage.show();
     }
