@@ -1,11 +1,11 @@
 ﻿
-
 var myMap; // Объект карты
 var pointsCoordArray = []; // Координаты точек
 var pointsCount = 0; // Сколько точек проставлено
 var polygonCount = 0; // Сколько мест проставлено
 var pointsObjects = []; // Объекты точек
 var polygonObjects = []; // Объекты парковочных мест
+var isInEditMode = false; // В режиме редактирования ли
 
 // Функция ymaps.ready() будет вызвана, когда
 // загрузятся все компоненты API, а также когда будет готово DOM-дерево.
@@ -55,7 +55,6 @@ function init() {
 }
 
 /** Включение/отключение функции редактирования **/
-var isInEditMode = false; // В режиме редактирования ли
 function changeEditing() {
     if(isInEditMode){
         isInEditMode = false;
@@ -75,12 +74,10 @@ function addingParkingPlace(event){
         alert(coords.join(', '));
         pointsCount++;
     }
-    //Если проставили 4, то собирать полигон и обнулить кол-во точек
-    if (pointsCount == 4) {
+    //Если проставили 2, то собирать полигон и обнулить кол-во точек
+    if (pointsCount == 2) {
         addPolygon( pointsCoordArray[0],
-                    pointsCoordArray[1],
-                    pointsCoordArray[2],
-                    pointsCoordArray[3]
+                    pointsCoordArray[1]
         );
         clearPoints();
     }
@@ -95,11 +92,14 @@ function addPoint(coords){
     });
     myMap.geoObjects.add(pointsObjects[pointsCount]);
 }
-function addPolygon(x1, y1, x2, y2){
+//x1, y1, x2, y2
+function addPolygon(A, C){
+    var B = [A[0], C[1]];
+    var D = [C[0], A[1]];
     polygonObjects[polygonCount] = new ymaps.GeoObject( {
             geometry: {
                 type: "Polygon",
-                coordinates: [[x1, y1, x2, y2]],
+                coordinates: [[A, B, C, D]],
             },
             properties: {
                 balloonContentHeader: 'Место № ' + (polygonCount+1),
@@ -111,7 +111,8 @@ function addPolygon(x1, y1, x2, y2){
         }
     );
     polygonObjects[polygonCount].events.add(['balloonopen', 'balloonclose', 'press', ], function(event){
-        alert("dddd");
+        placeRotationMode();
+        alert("rotationMode!");
     });
     myMap.geoObjects.add(polygonObjects[polygonCount]);
     polygonCount++;
@@ -126,3 +127,28 @@ function clearPoints(){
         myMap.geoObjects.remove(pointsObjects[i]);
     }
 }
+
+/** Режим поворота места **/
+function placeRotationMode(){
+        //Установка кнопки редактирования
+        var leftButton = new ymaps.control.Button('<b>d</b>');
+        var rightButton = new ymaps.control.Button('<b>g</b>');
+        leftButton.events.add('press', function(){
+            rotatePlace(0);
+        });
+        rightButton.events.add('press', function(){
+            rotatePlace(1);
+        });
+        myMap.controls.add(editButton, {
+            float: "left",
+            maxWidth: 150
+        });
+        myMap.controls.add(editButton, {
+            float: "left",
+            maxWidth: 150
+        });
+}
+
+ function rotatePlace(side){
+    alert("rotate!");
+ }
