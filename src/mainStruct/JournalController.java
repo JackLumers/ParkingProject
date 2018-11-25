@@ -1,5 +1,7 @@
 package mainStruct;
 
+import Entities.JournalEntry;
+import Entities.JournalDAO;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,78 +11,68 @@ import javafx.scene.control.TableView;
 import java.sql.SQLException;
 
 public class JournalController {
+
     @FXML
-    private TableColumn<Client, Integer> jempIdColumn;
+    private TableColumn<JournalEntry, String> dateColumn;
     @FXML
-    private TableColumn<Client, String> jempNameColumn;
+    private TableColumn<JournalEntry, String> placeNameColumn;
     @FXML
-    private TableColumn<Client, String> jempLastNameColumn;
+    private TableColumn<JournalEntry, String> nameColumn;
     @FXML
-    private TableColumn<Client, String> jempPhoneColumn;
+    private TableColumn<JournalEntry, String> phoneColumn;
     @FXML
-    private TableColumn<Client, Integer>  jempHoursColumn;
+    private TableColumn<JournalEntry, String> endDate;
     @FXML
-    private TableColumn<Client, Integer>  jempPriceColumn;
+    private TableColumn<JournalEntry, Integer> sumColumn;
     @FXML
-    private TableColumn<Client, Integer>  jempSumColumn;
-    @FXML
-    private TableView jemployeeTable;
+    private TableView journalTable;
 
 
     //Initializing the controller class.
     //This method is automatically called after the fxml file has been loaded.
     @FXML
-    private void initialize  ()throws SQLException, ClassNotFoundException {
-        /*
-        The setCellValueFactory(...) that we set on the table columns are used to determine
-        which field inside the Employee objects should be used for the particular column.
-        The arrow -> indicates that we're using a Java 8 feature called Lambdas.
-        (Another option would be to use a PropertyValueFactory, but this is not type-safe
-
-        We're only using StringProperty values for our table columns in this example.
-        When you want to use IntegerProperty or DoubleProperty, the setCellValueFactory(...)
-        must have an additional asObject():
-        */
-        jempIdColumn.setCellValueFactory(cellData -> cellData.getValue().employeeIdProperty().asObject());
-        jempNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
-        jempLastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
-        jempPhoneColumn.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
-        jempHoursColumn.setCellValueFactory(cellData -> cellData.getValue().HoursIdProperty().asObject());
-        jempPriceColumn.setCellValueFactory(cellData -> cellData.getValue().PriceIdProperty().asObject());
+    private void initialize() throws SQLException, ClassNotFoundException {
+        dateColumn.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
+        placeNameColumn.setCellValueFactory(cellData -> cellData.getValue().placeNameProperty());
+        nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        phoneColumn.setCellValueFactory(cellData -> cellData.getValue().phoneNumberProperty());
+        endDate.setCellValueFactory(cellData -> cellData.getValue().endDateProperty());
+        sumColumn.setCellValueFactory(cellData -> cellData.getValue().sumProperty().asObject());
 
 
         //Get all Employees information
-        ObservableList<Client> Data = ListDAO.searchJournal();
+        ObservableList<JournalEntry> Data = JournalDAO.getJournalValues();
         //Populate Employees on TableView
-        jpopulateEmployees(Data);
-
-
+        fillTableView(Data);
     }
-    //Populate Employees for TableView
+
+    //Filling TableView with journal objects
     @FXML
-    private void jpopulateEmployees (ObservableList<Client> empData) throws ClassNotFoundException {
+    private void fillTableView(ObservableList<JournalEntry> empData) {
         //Set items to the employeeTable
-        jemployeeTable.setItems(empData);
+        journalTable.setItems(empData);
     }
+
     @FXML
-    private void ClearEmployee (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+    private void ClearJournal(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
-            ListDAO.deleteAllEmp();
+            JournalDAO.cleanJournal();
             //Get all Employees information
-            ObservableList<Client> Data = ListDAO.searchJournal();
+            ObservableList<JournalEntry> Data = JournalDAO.getJournalValues();
             //Populate Employees on TableView
-            jpopulateEmployees(Data);
+            fillTableView(Data);
         } catch (SQLException e) {
             throw e;
         }
     }
+
     @FXML
-    private void update (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+    private void update(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
             //Get all Employees information
-            ObservableList<Client> Data = ListDAO.searchJournal();
+            ObservableList<JournalEntry> Data = JournalDAO.getJournalValues();
             //Populate Employees on TableView
-            jpopulateEmployees(Data);
+            fillTableView(Data);
         } catch (SQLException e) {
             throw e;
         }
