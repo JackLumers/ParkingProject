@@ -1,8 +1,10 @@
 package Entities;
 
 import DBUtilites.DBUtil;
+import UpdateEvent.UpdateEventsControl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import UpdateEvent.UpdateEventsListener;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +19,7 @@ public class ClientsDAO {
                         "VALUES " +
                         "('" + name + "','" + phone + "','" + passport + "')";
         DBUtil.dbExecuteUpdate(updateStmt);
+        UpdateEventsControl.callListeners(UpdateEventsListener.UPDATE_CLIENTS);
     }
 
     /** Delete existing client */
@@ -25,6 +28,7 @@ public class ClientsDAO {
                 "DELETE FROM clients " +
                         "WHERE name = '" + name + "';";
         DBUtil.dbExecuteUpdate(updateStmt);
+        UpdateEventsControl.callListeners(UpdateEventsListener.UPDATE_CLIENTS);
     }
 
     /** Get observable list of clients */

@@ -7,17 +7,14 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainStruct.PlacesController">
     <children>
-        <JFXTextField fx:id="empIdText" layoutX="541.0" layoutY="12.0" prefHeight="25.0" prefWidth="67.0" promptText="Место" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="12.0" />
-        <JFXButton fx:id="deleteEmpBtn" buttonType="RAISED" layoutX="608.0" layoutY="12.0" mnemonicParsing="false" onAction="#deletePlace" prefHeight="25.0" prefWidth="79.0" ripplerFill="#ffe4e4" text="Удалить" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="12.0" />
-        <JFXButton fx:id="addEmpBtn" buttonType="RAISED" layoutX="14.0" layoutY="239.0" mnemonicParsing="false" onAction="#insertPlace" text="Добавить" AnchorPane.leftAnchor="14.0" />
-        <VBox layoutX="64.0" layoutY="49.0" spacing="4.0" />
-        <VBox layoutX="-24.0" layoutY="53.0" prefWidth="67.0" spacing="12.0" />
-        <TableView fx:id="employeeTable" editable="true" layoutX="188.0" layoutY="56.0" prefHeight="477.0" prefWidth="525.0" stylesheets="@../css/tableViewMaterialStyle.css" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+        <JFXTextField fx:id="placeToDelTextField" layoutX="541.0" layoutY="12.0" prefHeight="25.0" prefWidth="67.0" promptText="Место" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="12.0" />
+        <JFXButton fx:id="deletePlaceButton" buttonType="RAISED" layoutX="608.0" layoutY="12.0" mnemonicParsing="false" onAction="#deletePlace" prefHeight="25.0" prefWidth="100.0" ripplerFill="#ffe4e4" text="Освободить" AnchorPane.rightAnchor="29.0" AnchorPane.topAnchor="12.0" />
+        <JFXButton fx:id="addPlaceButton" buttonType="RAISED" layoutX="14.0" layoutY="239.0" mnemonicParsing="false" onAction="#insertPlace" text="Оформить" AnchorPane.leftAnchor="14.0" />
+        <TableView fx:id="placesTable" editable="true" layoutX="188.0" layoutY="56.0" prefHeight="477.0" prefWidth="525.0" stylesheets="@../css/tableViewMaterialStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
             <columns>
                 <TableColumn fx:id="placeNameColumn" prefWidth="46.0" text="Место" />
                 <TableColumn fx:id="nameColumn" minWidth="5.0" prefWidth="66.0" text="ФИО" />
@@ -29,9 +26,9 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
         </TableView>
-      <JFXTextField fx:id="placeName" layoutX="20.0" layoutY="135.0" prefHeight="25.0" prefWidth="150.0" promptText="Номер места" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="135.0" />
-      <JFXTextField fx:id="hours" layoutX="20.0" layoutY="169.0" prefHeight="25.0" prefWidth="150.0" promptText="Длительность" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="169.0" />
-      <JFXTextField fx:id="price" layoutX="20.0" layoutY="205.0" prefHeight="25.0" prefWidth="150.0" promptText="Цена (в час)" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="205.0" />
+      <JFXTextField fx:id="placeNameTextField" layoutX="20.0" layoutY="135.0" prefHeight="25.0" prefWidth="150.0" promptText="Номер места" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="135.0" />
+      <JFXTextField fx:id="hoursTextField" layoutX="20.0" layoutY="169.0" prefHeight="25.0" prefWidth="150.0" promptText="Длительность" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="169.0" />
+      <JFXTextField fx:id="priceTextField" layoutX="20.0" layoutY="205.0" prefHeight="25.0" prefWidth="150.0" promptText="Цена (в час)" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="205.0" />
       <Text fill="#727272" layoutX="23.0" layoutY="313.0" text="Вывод ошибок" />
       <ScrollPane hbarPolicy="NEVER" layoutY="324.0" prefHeight="200.0" prefWidth="190.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
          <content>

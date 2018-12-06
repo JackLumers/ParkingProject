@@ -1,8 +1,8 @@
 package mainStruct;
 
 import Entities.*;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
+import UpdateEvent.UpdateEventsControl;
+import UpdateEvent.UpdateEventsListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -16,25 +16,24 @@ import javafx.scene.text.Text;
 
 import java.sql.SQLException;
 
-/**
- * Created by ONUR BASKIRT on 23.02.2016.
- */
-public class PlacesController {
+public class PlacesController implements UpdateEventsListener {
 
-    public ChoiceBox clientChoiceBox;
-    public ChoiceBox carChoiceBox;
     @FXML
-    private TextField placeName;
+    private ChoiceBox clientChoiceBox;
+    @FXML
+    private ChoiceBox carChoiceBox;
+    @FXML
+    private TextField placeNameTextField;
     @FXML
     private Text debugText;
     @FXML
-    private TextField empIdText;
+    private TextField placeToDelTextField;
     @FXML
-    private TextField hours;
+    private TextField hoursTextField;
     @FXML
-    private TextField price;
+    private TextField priceTextField;
     @FXML
-    private TableView employeeTable;
+    private TableView placesTable;
     @FXML
     private TableColumn<Place, String> nameColumn;
     @FXML
@@ -47,8 +46,6 @@ public class PlacesController {
     private TableColumn<Place, Integer> sumColumn;
 
 
-    //Initializing the controller class.
-    //This method is automatically called after the fxml file has been loaded.
     @FXML
     private void initialize() throws SQLException, ClassNotFoundException {
         placeNameColumn.setCellValueFactory(cellData -> cellData.getValue().placeNameProperty());
@@ -57,73 +54,71 @@ public class PlacesController {
         sumColumn.setCellValueFactory(cellData -> cellData.getValue().sumProperty().asObject());
         carNumberColumn.setCellValueFactory(cellData -> cellData.getValue().carNumberProperty());
 
-        //Filling ChoiceBox
-        try {
-            ObservableList<String> names = ClientsDAO.getClientsNamesList();
-            fillClientChoiceBox(names);
-        } catch (Exception e) {
-            debugText.setText(e.getLocalizedMessage());
-        }
+        //Заполнение ChoiceBox'а клиентов
+        updateClientsChoiceBox();
 
-        //Get all Employees information
-        ObservableList<Place> empData = PlacesDAO.getPlacesList();
-        //Populate Employees on TableView
-        fillTableView(empData);
-
-
+        //Заполнение TableView
+        ObservableList<Place> placesData = PlacesDAO.getPlacesList();
+        fillTableView(placesData);
 
         //Слушатель выбора клиента
-        clientChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+        clientChoiceBox.getSelectionModel().selectedIndexProperty()
+                .addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                //Прогрузить машины выбранного клиента
                 fillCarChoiceBox(newValue);
             }
         });
+
+        UpdateEventsControl.addListener(this);
     }
 
-    //Filling TableView
-    @FXML
-    private void fillTableView(ObservableList<Place> empData) {
-        //Set items to the employeeTable
-        employeeTable.setItems(empData);
-    }
-
-    //Insert an employee to the DB
+    //Добавление места
     @FXML
     private void insertPlace(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
-            int sum = Integer.parseInt(hours.getText()) * Integer.parseInt(price.getText());
+            if (!(hoursTextField.getText().equals("") || priceTextField.getText().equals("") ||
+                    placeNameTextField.getText().equals("") || clientChoiceBox.getValue().toString().equals("") ||
+                    carChoiceBox.getValue().toString().equals(""))) {
 
-            PlacesDAO.insertPlace(placeName.getText(),
-                    clientChoiceBox.getValue().toString(),
-                    Integer.parseInt(hours.getText()), Integer.parseInt(price.getText()), sum, carChoiceBox.getValue().toString());
+                int sum = Integer.parseInt(hoursTextField.getText()) * Integer.parseInt(priceTextField.getText());
 
-            JournalDAO.insertJournalEntry(placeName.getText(), clientChoiceBox.getValue().toString(),
-                    carChoiceBox.getValue().toString(), Integer.parseInt(hours.getText()),
-                    Integer.parseInt(price.getText()), sum);
+                PlacesDAO.insertPlace(placeNameTextField.getText(),
+                        clientChoiceBox.getValue().toString(),
+                        Integer.parseInt(hoursTextField.getText()), Integer.parseInt(priceTextField.getText()), sum, carChoiceBox.getValue().toString());
 
-            placeName.clear();
-            hours.clear();
-            price.clear();
-            //Get all places information
-            ObservableList<Place> empData = PlacesDAO.getPlacesList();
-            //Populate places on TableView
-            fillTableView(empData);
+                JournalEntryDAO.insertJournalEntry(placeNameTextField.getText(), clientChoiceBox.getValue().toString(),
+                        carChoiceBox.getValue().toString(), Integer.parseInt(hoursTextField.getText()),
+                        Integer.parseInt(priceTextField.getText()), sum);
+
+                carChoiceBox.setValue("");
+                clientChoiceBox.setValue("");
+                placeNameTextField.clear();
+                hoursTextField.clear();
+                priceTextField.clear();
+
+                //Обновление TableView
+                ObservableList<Place> empData = PlacesDAO.getPlacesList();
+                fillTableView(empData);
+                debugText.setText("");
+            } else {
+                debugText.setText("Заполните поля!");
+            }
         } catch (SQLException e) {
             debugText.setText(e.getLocalizedMessage());
             throw e;
         }
     }
 
-    //Delete place with a given place Id from DB
+    //Удаление места
     @FXML
     private void deletePlace(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
-            PlacesDAO.deletePlaceWithName(empIdText.getText());
-            empIdText.clear();
-            //Get all Employees information
+            PlacesDAO.deletePlaceWithName(placeToDelTextField.getText());
+            placeToDelTextField.clear();
+            //Обновление TableView
             ObservableList<Place> empData = PlacesDAO.getPlacesList();
-            //Populate Employees on TableView
             fillTableView(empData);
         } catch (SQLException e) {
             debugText.setText(e.getLocalizedMessage());
@@ -131,6 +126,23 @@ public class PlacesController {
         }
     }
 
+    //Обновление информации в окне выбора клиента
+    private void updateClientsChoiceBox() {
+        try {
+            ObservableList<String> names = ClientsDAO.getClientsNamesList();
+            fillClientChoiceBox(names);
+        } catch (SQLException e) {
+            debugText.setText(e.getLocalizedMessage());
+        }
+    }
+
+    //Заполнение TableView
+    @FXML
+    private void fillTableView(ObservableList<Place> placesData) {
+        placesTable.setItems(placesData);
+    }
+
+    //Заполнение окна выбора клиентов
     private void fillClientChoiceBox(ObservableList<String> names) {
         clientChoiceBox.setItems(names);
     }
@@ -142,8 +154,17 @@ public class PlacesController {
             int clientId = ClientsDAO.getClientIdByName(client);
             ObservableList<String> carNumbers = CarsDAO.getCarsNumbersListByClientId(clientId);
             carChoiceBox.setItems(carNumbers);
-        } catch (Exception e){
+        } catch (Exception e) {
             debugText.setText(e.getLocalizedMessage());
+        }
+    }
+
+    //Обновить бокс выбора клиентов, если было удаление/добваление оных
+    @Override
+    public void onDataChanged(byte updateMsg) {
+        if(updateMsg == UpdateEventsListener.UPDATE_CLIENTS || updateMsg == UpdateEventsListener.UPDATE_CARS){
+            updateClientsChoiceBox();
+            carChoiceBox.setItems(null);
         }
     }
 }

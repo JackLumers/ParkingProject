@@ -1,6 +1,8 @@
 package Entities;
 
 import DBUtilites.DBUtil;
+import UpdateEvent.UpdateEventsControl;
+import UpdateEvent.UpdateEventsListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -8,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-public class JournalDAO {
+public class JournalEntryDAO {
 
     //*******************************
     //SELECT journal
@@ -44,7 +46,7 @@ public class JournalDAO {
             journalEntry.setId(rs.getInt("id"));
             journalEntry.setPlaceName(rs.getString("place_name"));
             journalEntry.setName(rs.getString("name"));
-            journalEntry.setName(rs.getString("car_number"));
+            journalEntry.setCarNumber(rs.getString("car_number"));
             journalEntry.setEndDate(rs.getString("endDate"));
             journalEntry.setPrice(rs.getInt("price"));
             journalEntry.setSum(rs.getInt("sum"));
@@ -67,6 +69,7 @@ public class JournalDAO {
         //Execute UPDATE operation
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
+            UpdateEventsControl.callListeners(UpdateEventsListener.UPDATE_JOURNAL);
         } catch (SQLException e) {
             System.out.print("Error occurred while DELETE Operation: " + e);
             throw e;
@@ -90,6 +93,7 @@ public class JournalDAO {
 
         try {
             DBUtil.dbExecuteUpdate(journalStmt);
+            UpdateEventsControl.callListeners(UpdateEventsListener.UPDATE_JOURNAL);
         } catch (SQLException e) {
             System.out.print("Error occurred while DELETE Operation: " + e);
             throw e;

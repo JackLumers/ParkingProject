@@ -1,6 +1,8 @@
 package Entities;
 
 import DBUtilites.DBUtil;
+import UpdateEvent.UpdateEventsControl;
+import UpdateEvent.UpdateEventsListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -17,6 +19,7 @@ public class CarsDAO {
                         "VALUES " +
                         "('" + carNumber + "','" + clientId + "','" + mark + "','" + color + "')";
         DBUtil.dbExecuteUpdate(updateStmt);
+        UpdateEventsControl.callListeners(UpdateEventsListener.UPDATE_CARS);
     }
 
     /** Delete existing car */
@@ -25,6 +28,7 @@ public class CarsDAO {
                 "DELETE FROM cars " +
                         "WHERE car_number = '" + carNumber + "';";
         DBUtil.dbExecuteUpdate(updateStmt);
+        UpdateEventsControl.callListeners(UpdateEventsListener.UPDATE_CARS);
     }
 
     /** Get observable list of cars */

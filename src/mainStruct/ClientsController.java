@@ -10,6 +10,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
 
+import java.sql.SQLException;
+
 public class ClientsController {
 
     @FXML
@@ -57,11 +59,12 @@ public class ClientsController {
                 //Filling TableView and ChoiceBox
                 ObservableList<Client> clients = ClientsDAO.getClientsList();
                 fillTableView(clients);
+                debugText.setText("");
             } else {
                 debugText.setText("Заполните поля!");
             }
 
-        } catch (Exception e){
+        } catch (SQLException e){
             debugText.setText(e.getLocalizedMessage());
         }
 

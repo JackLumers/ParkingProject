@@ -21,8 +21,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <ChoiceBox fx:id="clientChoiceBox" layoutX="35.0" layoutY="168.0" prefWidth="150.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="16.0" />
-      <JFXButton fx:id="showCars" mnemonicParsing="false" text="Просмотр" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="45.0" />
+      <ChoiceBox fx:id="clientChoiceBox" layoutX="25.0" layoutY="38.0" prefWidth="150.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="38.0" />
       <Text fill="#727272" layoutX="28.0" layoutY="298.0" text="Вывод ошибок" AnchorPane.bottomAnchor="205.0" AnchorPane.leftAnchor="10.0" />
       <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
          <content>

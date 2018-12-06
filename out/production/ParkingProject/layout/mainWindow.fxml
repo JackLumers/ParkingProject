@@ -5,11 +5,6 @@
 
 <JFXTabPane tabClosingPolicy="UNAVAILABLE" tabMaxHeight="40.0" tabMinHeight="40.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
    <tabs>
-      <!--<Tab text="Карта">-->
-        <!--<content>-->
-            <!--<fx:include source="mapPage.fxml" />-->
-        <!--</content>-->
-      <!--</Tab>-->
       <Tab text="Парк. места">
         <content>
             <fx:include source="placesPage.fxml" />
